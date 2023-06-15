@@ -1,0 +1,10 @@
+version: "3"
+services:
+  example-app:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    volumes:
+      - ./:/app
+    ports:
+    - 9292:8080
