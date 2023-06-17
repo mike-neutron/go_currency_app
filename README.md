@@ -12,5 +12,5 @@ It uses Golang, Fiber, Gorm.
 
 <b>Commands:</b><br>
 - `docker compose up`<br>
-for run server<br><br>
+for run server<br>
 - `docker exec -it rates_app go run commands/getRates.go`<br>cron to parse rates from CBR<br>
