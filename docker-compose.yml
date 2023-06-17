@@ -1,10 +1,46 @@
 version: "3"
 services:
-  example-app:
+  #App
+  app:
+    container_name: rates_app
     build:
       dockerfile: Dockerfile
       context: ./
     volumes:
       - ./:/app
     ports:
-    - 9292:8080
+      - 9292:8080
+    networks:
+      - currencies
+
+  #PostreSQL Service
+  postgres:
+    build:
+      context: .
+      dockerfile: ./docker/postgres/Dockerfile
+    container_name: rates_postgresql
+    logging: # https://docs.docker.com/compose/compose-file/#loggin
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5532:5432"
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      SERVICE_NAME: postgres
+      SERVICE_TAGS: dev
+    volumes:
+      - ./docker/postgres/start:/docker-entrypoint-initdb.d
+      - ./docker/postgres/dbdata:/var/lib/postgresql/data
+    networks:
+      - currencies
+
+#Docker Networks
+networks:
+  currencies:
+    driver: bridge
