@@ -6,6 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/mike-neutron/go_currency_app/src/initializers"
 	"github.com/mike-neutron/go_currency_app/src/controllers"
+	"github.com/mike-neutron/go_currency_app/src/seeders"
 	swagger "github.com/arsmn/fiber-swagger/v2"
 	_ "github.com/mike-neutron/go_currency_app/docs"
 )
@@ -26,6 +27,7 @@ func main() {
     app := fiber.New()
 	app.Use(logger.New())
 
+	seeders.SeedRates()
     app.Get("/", controllers.HelloWorld)
 	app.Get("/swagger/*", swagger.HandlerDefault)
 	app.Get("/api/date/:date<datetime(2006\\-01\\-02)>", controllers.GetRatesByDate)
