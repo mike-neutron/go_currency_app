@@ -69,6 +69,7 @@ func main() {
 		existedKeys = append(existedKeys, existedRate.Code)
 	}
 
+	// Add rates
 	for _, rate := range rates.RateXMLItem {
 		if slices.Contains(existedKeys, rate.CharCode) {
 			continue

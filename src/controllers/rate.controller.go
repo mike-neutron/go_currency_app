@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"math"
-	"time"
 	"strconv"
 	"github.com/gofiber/fiber/v2"
 	"github.com/mike-neutron/go_currency_app/src/initializers"
@@ -30,12 +29,14 @@ func ExchangeRate(c *fiber.Ctx) error {
 	valueFloat64, _ := strconv.ParseFloat(value, 32)
 	valueFloat32 := float32(valueFloat64)
 
-	currentTime := time.Now()
-	currentDate := currentTime.Format("01-02-2006")
-
 	var fromRow, toRow models.Rate
+	rubRate := models.Rate{
+		Code: "RUB",
+		Rate: 1,
+	}
+
 	if (from != "RUB") {
-		errFrom := initializers.DB.Where("date = ? AND code = ?", currentDate, from).First(&fromRow)
+		errFrom := initializers.DB.Where("code = ?", from).Order("date desc").First(&fromRow)
 	
 		if (errFrom != nil) {
 			if errFrom.RowsAffected != 1 {
@@ -49,15 +50,12 @@ func ExchangeRate(c *fiber.Ctx) error {
 			}
 		}
 	} else {
-		fromRow = models.Rate{
-			Code: "RUB",
-			Rate: 1,
-		}
+		fromRow = rubRate
 	}
 	
 
 	if (to != "RUB") {
-		errTo := initializers.DB.Where("date = ? AND code = ?", currentDate, to).First(&toRow)
+		errTo := initializers.DB.Where("code = ?", to).Order("date desc").First(&toRow)
 	
 		if (errTo != nil) {
 			if errTo.RowsAffected != 1 {
@@ -71,10 +69,7 @@ func ExchangeRate(c *fiber.Ctx) error {
 			}
 		}
 	} else {
-		toRow = models.Rate{
-			Code: "RUB",
-			Rate: 1,
-		}
+		toRow = rubRate
 	}
 
 
