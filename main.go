@@ -31,6 +31,6 @@ func main() {
     app.Get("/", controllers.HelloWorld)
 	app.Get("/swagger/*", swagger.HandlerDefault)
 	app.Get("/api/date/:date<datetime(2006\\-01\\-02)>", controllers.GetRatesByDate)
-	app.Get("/api/exchange/:from/:to/:value<regex(^(?:(?:0|[1-9]\\d*)(?:\\.\\d*)?|\\.\\d+)$)>", controllers.ExchangeRate)
+	app.Get("/api/exchange/:from/:to/:value<maxLen(38);regex(^(?:(?:0|[1-9]\\d*)(?:\\.\\d*)?|\\.\\d+)$)>", controllers.ExchangeRate)
 	log.Fatal(app.Listen(":8080"))
 }
