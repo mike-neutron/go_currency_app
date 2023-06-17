@@ -11,7 +11,7 @@ services:
     ports:
       - 9292:8080
     networks:
-      - currencies
+      - rates
 
   #PostreSQL Service
   postgres:
@@ -38,9 +38,9 @@ services:
       - ./docker/postgres/start:/docker-entrypoint-initdb.d
       - ./docker/postgres/dbdata:/var/lib/postgresql/data
     networks:
-      - currencies
+      - rates
 
 #Docker Networks
 networks:
-  currencies:
+  rates:
     driver: bridge

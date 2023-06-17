@@ -11,6 +11,7 @@ import (
 	"time"
 	"strings"
 	"strconv"
+	"gorm.io/datatypes"
 )
 
 type RateXML struct {
@@ -56,7 +57,7 @@ func main() {
 		return
 	}
 
-	now := time.Now()
+	now := datatypes.Date(time.Now())
 	for _, rate := range rates.RateXMLItem {
 		value := strings.Replace(rate.Value, ",", ".", -1)
 		valueFloat64, err := strconv.ParseFloat(value, 32)

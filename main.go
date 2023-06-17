@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/mike-neutron/go_currency_app/src/initializers"
+	"github.com/mike-neutron/go_currency_app/src/controllers"
 )
 
 func init() {
@@ -19,17 +20,8 @@ func main() {
     app := fiber.New()
 	app.Use(logger.New())
 
-    app.Get("/", func(c *fiber.Ctx) error {
-        return c.SendString("Hello, World 👋!")
-    })
-
-	app.Get("/api/stocks/date/:date", func(c *fiber.Ctx) error {
-		return c.SendString(c.Params("date"))
-	})
-
-	app.Get("/api/stocks/exchange/:from/:to", func(c *fiber.Ctx) error {
-		return c.SendString("from: "+c.Params("from")+ ", to: "+c.Params("to"))
-	})
-
+    app.Get("/", controllers.HelloWorld)
+	app.Get("/api/stocks/date/:date<datetime(2006\\-01\\-02)>", controllers.GetRatesByDate)
+	app.Get("/api/stocks/exchange/:from/:to/:value<float>", controllers.ExchangeRate)
 	log.Fatal(app.Listen(":8080"))
 }
