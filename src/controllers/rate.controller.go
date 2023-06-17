@@ -33,9 +33,7 @@ func ExchangeRate(c *fiber.Ctx) error {
 	currentTime := time.Now()
 	currentDate := currentTime.Format("01-02-2006")
 
-	var fromRow models.Rate
-	var toRow models.Rate
-
+	var fromRow, toRow models.Rate
 	if (from != "RUB") {
 		errFrom := initializers.DB.Where("date = ? AND code = ?", currentDate, from).First(&fromRow)
 	

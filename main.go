@@ -21,7 +21,7 @@ func main() {
 	app.Use(logger.New())
 
     app.Get("/", controllers.HelloWorld)
-	app.Get("/api/stocks/date/:date<datetime(2006\\-01\\-02)>", controllers.GetRatesByDate)
-	app.Get("/api/stocks/exchange/:from/:to/:value<float>", controllers.ExchangeRate)
+	app.Get("/api/date/:date<datetime(2006\\-01\\-02)>", controllers.GetRatesByDate)
+	app.Get("/api/exchange/:from/:to/:value<float>", controllers.ExchangeRate)
 	log.Fatal(app.Listen(":8080"))
 }

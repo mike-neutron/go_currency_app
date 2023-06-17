@@ -2,11 +2,11 @@ package initializers
 
 import (
 	"fmt"
-	// "log"
+	"log"
 	"os"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	// "gorm.io/gorm/logger"
+	"gorm.io/gorm/logger"
 	"github.com/mike-neutron/go_currency_app/src/models"
 )
 
@@ -18,15 +18,15 @@ func ConnectDB(config *Config) {
 
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		// log.Fatal("Failed to connect to the Database! \n", err.Error())
+		log.Fatal("Failed to connect to the Database! \n", err.Error())
 		os.Exit(1)
 	}
 
 	DB.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"")
-	// DB.Logger = logger.Default.LogMode(logger.Info)
+	DB.Logger = logger.Default.LogMode(logger.Info)
 
-	// log.Println("Running Migrations")
+	log.Println("Running Migrations")
 	DB.AutoMigrate(&models.Rate{})
 
-	// log.Println("🚀 Connected Successfully to the Database")
+	log.Println("🚀 Connected Successfully to the Database")
 }

@@ -41,6 +41,7 @@ require (
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/wpcodevo/golang-fiber v0.0.0-20230129125335-c91d2c6069e6 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
+	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect

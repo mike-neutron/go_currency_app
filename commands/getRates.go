@@ -12,6 +12,7 @@ import (
 	"strings"
 	"strconv"
 	"gorm.io/datatypes"
+	"golang.org/x/exp/slices"
 )
 
 type RateXML struct {
@@ -57,8 +58,22 @@ func main() {
 		return
 	}
 
+	// Get existed values
 	now := datatypes.Date(time.Now())
+	var existed []models.Rate
+	initializers.DB.Where("date = ?", now).Find(&existed)
+
+	// Make existed array
+	var existedKeys []string
+	for _, existedRate := range existed {
+		existedKeys = append(existedKeys, existedRate.Code)
+	}
+
 	for _, rate := range rates.RateXMLItem {
+		if slices.Contains(existedKeys, rate.CharCode) {
+			continue
+		}
+
 		value := strings.Replace(rate.Value, ",", ".", -1)
 		valueFloat64, err := strconv.ParseFloat(value, 32)
 		if err != nil {
