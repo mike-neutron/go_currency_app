@@ -12,12 +12,12 @@ services:
       - 9292:8080
     networks:
       - rates
+    depends_on:
+      - postgres
 
   #PostreSQL Service
   postgres:
-    build:
-      context: .
-      dockerfile: ./docker/postgres/Dockerfile
+    image: postgres:15 # Image page: <https://hub.docker.com/_/redis>
     container_name: rates_postgresql
     logging: # https://docs.docker.com/compose/compose-file/#loggin
       driver: "json-file"
@@ -35,7 +35,6 @@ services:
       SERVICE_NAME: postgres
       SERVICE_TAGS: dev
     volumes:
-      - ./docker/postgres/start:/docker-entrypoint-initdb.d
       - ./docker/postgres/dbdata:/var/lib/postgresql/data
     networks:
       - rates

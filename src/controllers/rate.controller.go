@@ -41,7 +41,6 @@ func ExchangeRate(c *fiber.Ctx) error {
 	to    := c.Params("to")
 	value := c.Params("value")
 	valueFloat64, _ := strconv.ParseFloat(value, 32)
-	valueFloat32 := float32(valueFloat64)
 
 	var fromRow, toRow models.Rate
 	rubRate := models.Rate{
@@ -88,8 +87,8 @@ func ExchangeRate(c *fiber.Ctx) error {
 
 
 	// Calculate
-	var result float32 = valueFloat32 * fromRow.Rate / toRow.Rate
-	resultForReturn := math.Floor(math.Abs(float64(result)) * 100) / 100
+	var result float64 = valueFloat64 * float64(fromRow.Rate) / float64(toRow.Rate)
+	resultForReturn := math.Floor(math.Abs(float64(result)) * 10000) / 10000
 
 	// Return response
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
