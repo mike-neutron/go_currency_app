@@ -1,6 +1,9 @@
 <b>Hello, it is a rates app!</b><br>
 It uses Golang, Fiber, Gorm.
 
+<b>Swagger:</b><br>
+`/swagger/index.html`
+
 <b>Methods:</b><br>
 `GET /api/date/:date`<br>
 for get rates by date, example /api/date/1970-01-01

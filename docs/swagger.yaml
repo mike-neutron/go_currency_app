@@ -1,0 +1,91 @@
+basePath: /
+definitions:
+  controllers.ExchangeRateResponse:
+    properties:
+      data:
+        properties:
+          result:
+            example: 10.91
+            type: number
+        type: object
+      status:
+        example: success
+        type: string
+    type: object
+  controllers.GetRatesByDateResponse:
+    properties:
+      data:
+        properties:
+          rates:
+            items:
+              $ref: '#/definitions/models.RateSwagger'
+            type: array
+        type: object
+      status:
+        example: success
+        type: string
+    type: object
+  models.RateSwagger:
+    properties:
+      code:
+        type: string
+      date:
+        type: string
+      rate:
+        type: number
+    type: object
+info:
+  contact: {}
+  description: api for getting rates, exchange rates
+  title: Rates API
+  version: "1.0"
+paths:
+  /api/date/{date}:
+    get:
+      description: Get rates by date
+      parameters:
+      - default: "2023-06-17"
+        description: Date of rate
+        in: path
+        name: date
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.GetRatesByDateResponse'
+      summary: Get rates by date
+  /api/exchange/{from}/{to}/{value}:
+    get:
+      description: ExchangeRate
+      parameters:
+      - default: USD
+        description: From currency
+        in: path
+        name: from
+        required: true
+        type: string
+      - default: RUB
+        description: To currency
+        in: path
+        name: to
+        required: true
+        type: string
+      - default: 100
+        description: Value
+        in: path
+        name: value
+        required: true
+        type: number
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.ExchangeRateResponse'
+      summary: ExchangeRate
+swagger: "2.0"

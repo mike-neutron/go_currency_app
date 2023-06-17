@@ -8,6 +8,12 @@ import (
 	"github.com/mike-neutron/go_currency_app/src/models"
 )
 
+//	@Summary		Get rates by date
+//	@Description	Get rates by date
+//	@Produce		json
+//	@Param			date	path		string	true "Date of rate"	"Date" default(2023-06-17)
+//	@Success		200	{object}	GetRatesByDateResponse
+//	@Router			/api/date/{date} [get]
 func GetRatesByDate(c *fiber.Ctx) error {
 	// Define result array
 	var result []models.Rate
@@ -22,6 +28,14 @@ func GetRatesByDate(c *fiber.Ctx) error {
 	})
 }
 
+//	@Summary		ExchangeRate
+//	@Description	ExchangeRate
+//	@Produce		json
+//	@Param			from	path		string	true	"From currency" default(USD)
+//	@Param			to	path		string	true	"To currency" default(RUB)
+//	@Param			value	path		number	true	"Value" default(100)
+//	@Success		200	{object}	ExchangeRateResponse
+//	@Router			/api/exchange/{from}/{to}/{value} [get]
 func ExchangeRate(c *fiber.Ctx) error {
 	from  := c.Params("from")
 	to    := c.Params("to")
@@ -84,4 +98,18 @@ func ExchangeRate(c *fiber.Ctx) error {
 			"result": resultForReturn,
 		},
 	})
+}
+
+type GetRatesByDateResponse struct {
+	Status string `json:"status" example:"success"`
+	Data struct{
+		Rates []models.RateSwagger `json:"rates"`
+	} `json:"data"`
+}
+
+type ExchangeRateResponse struct {
+	Status string `json:"status" example:"success"`
+	Data struct{
+		Result float32 `json:"result" example:"10.91"`
+	} `json:"data"`
 }
